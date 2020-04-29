@@ -1,0 +1,25 @@
+{
+  "courses": [
+    {
+       "_id":"1",
+       "title":"mi titulo 1",
+       "teacher":"Leonidas Esteban",
+       "description":"Una fucking descripcion",
+       "topic":"programacion \\m/"
+    },
+    {
+       "_id":"2",
+       "title":"mi titulo 2",
+       "teacher":"Freddy Vega",
+       "description":"Una fucking descripcion",
+       "topic":"programacion \\m/"
+    },
+    {
+       "_id":"3",
+       "title":"mi titulo 3",
+       "teacher":"Adrian Estrada",
+       "description":"Una fucking descripcion",
+       "topic":"programacion \\m/"
+    }
+ ]
+}

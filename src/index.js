@@ -1,32 +1,27 @@
 'use strict'
 
-import {graphql, buildSchema} from 'graphql'
+import { buildSchema } from 'graphql'
+import express from 'express'
+import gqlMiddleware from 'express-graphql'
+import {readFileSync} from 'fs'
+import { join } from 'path'
+import {resolvers} from './lib/resolvers'
 
-//define a schema
+const app = express()
+const PORT = process.env.PORT || 3000
+// define a schema
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
-    saludo: String
-  }
-`)
+const schema = buildSchema(readFileSync(join(__dirname,'lib', 'schema.graphql'), 'utf-8'))
 
 // configurar los resolvers
 
-const resolvers = {
-  hello(){
-    return 'Hola mmundo!'
-  },
-  saludo(){
-    return 'Este es un saludo'
-  }
-}
 
-// make a query
+app.use('/api', gqlMiddleware({
+  schema,
+  rootValue: resolvers,
+  graphiql: true
+}))
 
-graphql(schema, '{hello}', resolvers)
-.then(data => console.log(data))
-
-
-graphql(schema, '{saludo}', resolvers)
-.then(data => console.log(data))
+app.listen(PORT, () => {
+  console.log(`Server is listening on ${PORT}`)
+})
