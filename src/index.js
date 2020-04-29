@@ -1,20 +1,19 @@
 'use strict'
 
-import { buildSchema } from 'graphql'
+import { makeExecutableSchema } from 'graphql-tools'
 import express from 'express'
 import gqlMiddleware from 'express-graphql'
-import {readFileSync} from 'fs'
+import { readFileSync } from 'fs'
 import { join } from 'path'
-import {resolvers} from './lib/resolvers'
+import { resolvers } from './lib/resolvers'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 // define a schema
-
-const schema = buildSchema(readFileSync(join(__dirname,'lib', 'schema.graphql'), 'utf-8'))
+const typeDefs = readFileSync(join(__dirname, 'lib', 'schema.graphql'), 'utf-8')
+const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 // configurar los resolvers
-
 
 app.use('/api', gqlMiddleware({
   schema,
