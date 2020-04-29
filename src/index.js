@@ -1,5 +1,4 @@
 'use strict'
-
 import { makeExecutableSchema } from 'graphql-tools'
 import express from 'express'
 import gqlMiddleware from 'express-graphql'

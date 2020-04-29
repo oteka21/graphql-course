@@ -1,13 +1,32 @@
 import { courses } from '../../db.json'
+import {connectDB} from './db'
+import {ObjectID} from 'mongodb'
 
 export const resolvers = {
   Query: {
-    getCourses () {
+    async getCourses () {
+      let db, 
+      courses = []
+
+      try {
+        db = await connectDB()
+        courses = await db.collection('courses').find().toArray()
+      }catch(err){
+        console.error(err)
+      }
       return courses
     },
-    getCourse (root, args) {
-      const course = courses.filter(item => item._id === args.id)
-      return course.pop()
+    async getCourse (root, {id}) {
+      let db, 
+      course
+
+      try {
+        db = await connectDB()
+        course = await db.collection('courses').findOne({_id: ObjectID(id)})
+      }catch(err){
+        console.error(err)
+      }
+      return course
     }
   }
 }
