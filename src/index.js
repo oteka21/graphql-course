@@ -14,7 +14,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 // configurar los resolvers
 
-app.use('/api', gqlMiddleware({
+app.use('/graphql', gqlMiddleware({
   schema,
   rootValue: resolvers,
   graphiql: true
