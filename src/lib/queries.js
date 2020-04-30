@@ -39,7 +39,7 @@ export const queries = {
       }
       return students
     },
-    async getCourse (root, { id }) {
+    async getStudent (root, { id }) {
       let db,
         student
 

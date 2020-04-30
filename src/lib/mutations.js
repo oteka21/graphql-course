@@ -26,8 +26,8 @@ export const mutations = {
         course
       try {
         db = await connectDB()
-        await db.collection('courses').updateOne({_id: ObjectID(id)}, {$set: input})
-        course =  await db.collection('courses').findOne({_id: ObjectID(id)})
+        await db.collection('courses').updateOne({ _id: ObjectID(id) }, { $set: input })
+        course = await db.collection('courses').findOne({ _id: ObjectID(id) })
       } catch (err) {
         console.error(err)
       }
@@ -35,7 +35,7 @@ export const mutations = {
     },
     async createStudent (root, { input }) {
       const defaults = {
-        email: '',
+        email: ''
       }
 
       const newStudent = { ...defaults, ...input }
@@ -55,12 +55,37 @@ export const mutations = {
         student
       try {
         db = await connectDB()
-        await db.collection('students').updateOne({_id: ObjectID(id)}, {$set: input})
-        student =  await db.collection('students').findOne({_id: ObjectID(id)})
+        await db.collection('students').updateOne({ _id: ObjectID(id) }, { $set: input })
+        student = await db.collection('students').findOne({ _id: ObjectID(id) })
       } catch (err) {
         console.error(err)
       }
       return student
+    },
+    async addPeople (root, { courseID, studentID }) {
+      let db,
+        course,
+        people,
+        updatedCourse
+
+      try {
+        db = await connectDB()
+        people = await db.collection('students').findOne({ _id: ObjectID(studentID) })
+        course = await db.collection('courses').findOne({ _id: ObjectID(courseID) })
+
+        if (!people || !course) throw new Error('Course or Student not found')
+
+        await db.collection('courses').updateOne(
+          { _id: ObjectID(courseID) },
+          { $addToSet: { people: ObjectID(studentID) } }
+        )
+
+        updatedCourse = await db.collection('courses').findOne({ _id: ObjectID(courseID) })
+      } catch (err) {
+        console.error(err)
+      }
+
+      return updatedCourse
     }
   }
 }
