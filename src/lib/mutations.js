@@ -1,5 +1,6 @@
 'use strict'
 import { connectDB } from './db'
+import { ObjectID } from 'mongodb'
 export const mutations = {
   Mutation: {
     async createCourse (root, { input }) {
@@ -19,6 +20,47 @@ export const mutations = {
         console.error(err)
       }
       return input
+    },
+    async editCourse (root, { id, input }) {
+      let db,
+        course
+      try {
+        db = await connectDB()
+        await db.collection('courses').updateOne({_id: ObjectID(id)}, {$set: input})
+        course =  await db.collection('courses').findOne({_id: ObjectID(id)})
+      } catch (err) {
+        console.error(err)
+      }
+      return course
+    },
+    async createStudent (root, { input }) {
+      const defaults = {
+        email: '',
+      }
+
+      const newStudent = { ...defaults, ...input }
+      let db,
+        student
+      try {
+        db = await connectDB()
+        student = await db.collection('students').insertOne(newStudent)
+        input._id = student.insertedId
+      } catch (err) {
+        console.error(err)
+      }
+      return input
+    },
+    async editStudent (root, { id, input }) {
+      let db,
+        student
+      try {
+        db = await connectDB()
+        await db.collection('students').updateOne({_id: ObjectID(id)}, {$set: input})
+        student =  await db.collection('students').findOne({_id: ObjectID(id)})
+      } catch (err) {
+        console.error(err)
+      }
+      return student
     }
   }
 }
