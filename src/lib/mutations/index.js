@@ -1,5 +1,5 @@
 'use strict'
-import { connectDB } from './db'
+import { connectDB } from '../db'
 import { ObjectID } from 'mongodb'
 export const mutations = {
   Mutation: {
