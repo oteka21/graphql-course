@@ -1,5 +1,6 @@
 import { connectDB } from '../db'
 import { ObjectID } from 'mongodb'
+import { errorHandler} from '../errorHandler'
 
 export const types = {
   Course: {
@@ -14,7 +15,7 @@ export const types = {
           ? await db.collection('students').find({ _id: { $in: ids } }).toArray()
           : []
       } catch (err) {
-        console.error()
+        errorHandler(err)
       }
 
       return peopleData

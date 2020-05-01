@@ -1,6 +1,7 @@
 'use strict'
 import { connectDB } from '../db'
 import { ObjectID } from 'mongodb'
+import { errorHandler} from '../errorHandler'
 export const mutations = {
   Mutation: {
     async createCourse (root, { input }) {
@@ -17,7 +18,7 @@ export const mutations = {
         course = await db.collection('courses').insertOne(newCourse)
         input._id = course.insertedId
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return input
     },
@@ -29,7 +30,7 @@ export const mutations = {
         await db.collection('courses').updateOne({ _id: ObjectID(id) }, { $set: input })
         course = await db.collection('courses').findOne({ _id: ObjectID(id) })
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return course
     },
@@ -46,7 +47,7 @@ export const mutations = {
         student = await db.collection('students').insertOne(newStudent)
         input._id = student.insertedId
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return input
     },
@@ -58,7 +59,7 @@ export const mutations = {
         await db.collection('students').updateOne({ _id: ObjectID(id) }, { $set: input })
         student = await db.collection('students').findOne({ _id: ObjectID(id) })
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return student
     },
@@ -82,7 +83,7 @@ export const mutations = {
 
         updatedCourse = await db.collection('courses').findOne({ _id: ObjectID(courseID) })
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
 
       return updatedCourse

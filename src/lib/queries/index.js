@@ -1,5 +1,6 @@
 import { connectDB } from '../db'
 import { ObjectID } from 'mongodb'
+import { errorHandler} from '../errorHandler'
 
 export const queries = {
   Query: {
@@ -11,7 +12,7 @@ export const queries = {
         db = await connectDB()
         courses = await db.collection('courses').find().toArray()
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return courses
     },
@@ -23,7 +24,7 @@ export const queries = {
         db = await connectDB()
         course = await db.collection('courses').findOne({ _id: ObjectID(id) })
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return course
     },
@@ -35,7 +36,7 @@ export const queries = {
         db = await connectDB()
         students = await db.collection('students').find().toArray()
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return students
     },
@@ -47,7 +48,7 @@ export const queries = {
         db = await connectDB()
         student = await db.collection('students').findOne({ _id: ObjectID(id) })
       } catch (err) {
-        console.error(err)
+        errorHandler(err)
       }
       return student
     }
