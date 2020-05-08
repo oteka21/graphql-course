@@ -1,9 +1,16 @@
+enum level {
+  easy
+  hard
+  legend
+}
+
 type Course {
   _id: ID!
   title: String!
   teacher: String
   description: String!
   topic: String
+  level: level
   people: [Student]
 }
 
@@ -13,22 +20,12 @@ type Student{
   email: String
 }
 
-type Query {
-  "Devuelve todos los cursos"
-  getCourses: [Course]
-  "devuelve un curso"
-  getCourse(id: ID): Course
-    "Devuelve todos los Estudiantes"
-  getStudents: [Student]
-  "devuelve un estiduante"
-  getStudent(id: ID): Student
-}
-
 input CourseInput{
   title: String!
   teacher: String
   description: String!
   topic: String
+  level: level
 }
 
 input CourseEditInput{
@@ -48,7 +45,6 @@ input StudentEditInput{
   email: String
 }
 
-
 type Mutation {
   "Crear un curso"
   createCourse(input: CourseInput!): Course
@@ -66,4 +62,15 @@ type Mutation {
   addPeople(
     courseID: ID!,
     studentID: ID!): Course
+}
+
+type Query {
+  "Devuelve todos los cursos"
+  getCourses: [Course]
+  "devuelve un curso"
+  getCourse(id: ID): Course
+    "Devuelve todos los Estudiantes"
+  getStudents: [Student]
+  "devuelve un estiduante"
+  getStudent(id: ID): Student
 }
