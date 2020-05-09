@@ -20,5 +20,15 @@ export const types = {
 
       return peopleData
     }
+  },
+  Person: {
+    __resolveType(person,context,info){
+      console.log(person)
+      if(person.phone){
+        return 'Monitor'
+      }
+
+      return 'Student'
+    }
   }
 }

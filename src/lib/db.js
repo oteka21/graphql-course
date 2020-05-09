@@ -7,6 +7,7 @@ const {
 } = process.env
 
 const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
+console.log(mongoUrl)
 let connection
 
 export async function connectDB () {

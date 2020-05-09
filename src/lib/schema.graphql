@@ -4,6 +4,27 @@ enum level {
   legend
 }
 
+interface Person {
+  _id: ID!
+  name: String!
+  email: String!
+}
+
+type Student implements Person{
+  _id: ID!
+  name: String!
+  email: String!
+  avatar: String
+}
+
+type Monitor implements Person {
+  _id: ID!
+  name: String!
+  email: String!
+  phone: String
+}
+
+
 type Course {
   _id: ID!
   title: String!
@@ -12,12 +33,6 @@ type Course {
   topic: String
   level: level
   people: [Student]
-}
-
-type Student{
-  _id: ID!
-  name: String!
-  email: String
 }
 
 input CourseInput{
@@ -35,14 +50,18 @@ input CourseEditInput{
   topic: String
 }
 
-input StudentInput{
+input PersonInput{
   name: String!
-  email: String
+  email: String!
+  phone: String
+  avatar: String
 }
 
-input StudentEditInput{
-  name: String
-  email: String
+input PersonEditInput{
+  name: String!
+  email: String!
+  phone: String
+  avatar: String
 }
 
 type Mutation {
@@ -52,12 +71,12 @@ type Mutation {
   editCourse(
     id: ID!,
     input: CourseEditInput!): Course
-  "Crear un estidante"
-  createStudent(input: StudentInput!): Student
-  "Edita un estidante"
-  editStudent(
+  "Crear un persona"
+  createPerson(input: PersonInput!): Person
+  "Edita una persona"
+  editPerson(
     id: ID!,
-    input: StudentEditInput!): Student
+    input: PersonEditInput!): Person
   "Crea un estudiante en mutation"
   addPeople(
     courseID: ID!,
@@ -69,8 +88,8 @@ type Query {
   getCourses: [Course]
   "devuelve un curso"
   getCourse(id: ID): Course
-    "Devuelve todos los Estudiantes"
-  getStudents: [Student]
-  "devuelve un estiduante"
-  getStudent(id: ID): Student
+    "Devuelve todas las personas"
+  getPeople: [Person]
+  "devuelve una persona"
+  getPerson(id: ID): Person
 }

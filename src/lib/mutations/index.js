@@ -34,7 +34,7 @@ export const mutations = {
       }
       return course
     },
-    async createStudent (root, { input }) {
+    async createPerson (root, { input }) {
       const defaults = {
         email: ''
       }
@@ -51,7 +51,7 @@ export const mutations = {
       }
       return input
     },
-    async editStudent (root, { id, input }) {
+    async editPerson (root, { id, input }) {
       let db,
         student
       try {

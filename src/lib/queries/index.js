@@ -7,7 +7,6 @@ export const queries = {
     async getCourses () {
       let db
       let courses = []
-
       try {
         db = await connectDB()
         courses = await db.collection('courses').find().toArray()
@@ -28,7 +27,7 @@ export const queries = {
       }
       return course
     },
-    async getStudents () {
+    async getPeople () {
       let db
       let students = []
 
@@ -40,7 +39,7 @@ export const queries = {
       }
       return students
     },
-    async getStudent (root, { id }) {
+    async getPerson (root, { id }) {
       let db,
         student
 
