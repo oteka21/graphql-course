@@ -21,7 +21,7 @@ export async function connectDB () {
     })
     connection = client.db(DB_NAME)
   } catch (err) {
-    console.err('No se pudo conectar', err)
+    console.error('No se pudo conectar', err)
     process.exit(1)
   }
 
